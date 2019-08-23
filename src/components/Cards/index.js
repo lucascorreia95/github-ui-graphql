@@ -4,8 +4,8 @@ import SingleCard from './SingleCard';
 
 export default function Cards(props) {
   return (
-    props.data.items.map((item) => (
-      <SingleCard key={item.id} item={item} />
+    props.data.search.edges.map((item) => (
+      <SingleCard key={item.node.id} item={item.node} />
     ))
   );
 }

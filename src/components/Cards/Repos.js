@@ -11,35 +11,63 @@ import IconButton from '@material-ui/core/IconButton';
 import FolderIcon from '@material-ui/icons/Folder';
 import LinkIcon from '@material-ui/icons/Link';
 import Link from '@material-ui/core/Link';
+import CircularProgress from '@material-ui/core/CircularProgress';
+import Box from '@material-ui/core/Box';
+
+import { useQuery } from 'react-apollo';
+import gql from 'graphql-tag';
+
 
 export default function Repos(props) {
+  const { login } = props;
+
+  const SearchQuery = gql`
+    query Search($login : String!) {
+      user(login: $login) {
+        repositories(first: 10){
+          nodes{
+            id
+            name
+            url
+          }
+        }
+      }
+    }
+  `;
+
+  const { loading, error, data } = useQuery(SearchQuery, {
+    variables: { login },
+  });
+
+  if (loading) {
+    return (
+      <Box component="div">
+        <CircularProgress />
+      </Box>
+    );
+  }
+
+  if (error) return `Error! ${error}`;
+
   return (
     <List>
-      {props.repos.length > 0
-        && props.repos.map((repo) => (
-          <ListItem key={repo.id}>
-            <ListItemAvatar>
-              <Avatar>
-                <FolderIcon />
-              </Avatar>
-            </ListItemAvatar>
-            <ListItemText primary={repo.name} />
-            <ListItemSecondaryAction>
-              <Link href={repo.html_url}>
-                <IconButton edge="end" aria-label="link">
-                  <LinkIcon />
-                </IconButton>
-              </Link>
-            </ListItemSecondaryAction>
-          </ListItem>
-        ))}
-
-      {props.empty && !props.loading
-        && (
-        <ListItem>
-          <ListItemText primary="Nenhum repositório encontrado!" />
+      {data.user.repositories.nodes.map((repo) => (
+        <ListItem key={repo.id}>
+          <ListItemAvatar>
+            <Avatar>
+              <FolderIcon />
+            </Avatar>
+          </ListItemAvatar>
+          <ListItemText primary={repo.name} />
+          <ListItemSecondaryAction>
+            <Link href={repo.url}>
+              <IconButton edge="end" aria-label="link">
+                <LinkIcon />
+              </IconButton>
+            </Link>
+          </ListItemSecondaryAction>
         </ListItem>
-        )}
+      ))}
     </List>
   );
 }

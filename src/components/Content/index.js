@@ -6,10 +6,9 @@ import Button from '@material-ui/core/Button';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import Box from '@material-ui/core/Box';
 
-import { graphql } from 'react-apollo';
+import { Query } from 'react-apollo';
 import gql from 'graphql-tag';
 
-import api from '../../Services/api';
 import Cards from '../Cards';
 
 // eslint-disable-next-line no-unused-vars
@@ -25,28 +24,38 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function Content(props) {
+function Content() {
   const [user, setUser] = useState('');
-  const [data, setData] = useState();
-  const [loading, setLoading] = useState(false);
+  const [info, setInfor] = useState(false);
   const classes = useStyles();
 
   async function handleSubmit(event) {
     event.preventDefault();
-
-    setData(null);
-    setLoading(true);
-
-    const response = await api.get(`search/users?q=${user}`);
-
-    setData(response.data);
-    setLoading(false);
+    setInfor(true);
   }
 
-  // eslint-disable-next-line no-console
-  console.log(props);
+  const SearchQuery = gql`
+    query {
+      search(query:"lucascorreia", type: USER, first: 5) {
+        userCount
+        edges{
+          node{
+            __typename
+            ... on User {
+              name
+              login
+              id
+              avatarUrl
+              url
+            }
+          }
+        }
+      }
+    }
+  `;
 
   return (
+
     <Container maxWidth="sm" className={classes.container}>
       <form onSubmit={handleSubmit}>
         <TextField
@@ -73,37 +82,32 @@ function Content(props) {
         </Button>
       </form>
 
-      {loading
+      {info
         && (
-        <Box component="div" className={classes.box}>
-          <CircularProgress />
-        </Box>
-        )}
+          <Query query={SearchQuery}>
 
-      {data
-        && (
-          <Cards data={data} />
-        )}
+            {({ loading, error, data }) => {
+              if (loading) {
+                return (
+                  <Box component="div" className={classes.box}>
+                    <CircularProgress />
+                  </Box>
+                );
+              }
 
+              if (error) {
+                console.log(error);
+                return (<span>Desculpe, algo deu errado ):</span>);
+              }
+
+              return (
+                <Cards data={data} />
+              );
+            }}
+          </Query>
+        )}
     </Container>
   );
 }
 
-const SearchQuery = gql`
-  query {
-    search(query:"lucascorreia", type: USER, first: 5) {
-      userCount
-      edges{
-        node{
-          __typename
-          ... on User {
-            name
-            login
-          }
-        }
-      }
-    }
-  }
-`;
-
-export default graphql(SearchQuery, { name: 'searchUsers' })(Content);
+export default Content;
