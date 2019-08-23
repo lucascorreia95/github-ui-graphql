@@ -35,8 +35,8 @@ function Content() {
   }
 
   const SearchQuery = gql`
-    query {
-      search(query:"lucascorreia", type: USER, first: 5) {
+    query search($queryUser: String!){
+      search(query: $queryUser, type: USER, first: 5) {
         userCount
         edges{
           node{
@@ -84,7 +84,7 @@ function Content() {
 
       {info
         && (
-          <Query query={SearchQuery}>
+          <Query query={SearchQuery} variables={{ queryUser: user }}>
 
             {({ loading, error, data }) => {
               if (loading) {
