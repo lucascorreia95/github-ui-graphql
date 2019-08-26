@@ -17,6 +17,7 @@ import Typography from '@material-ui/core/Typography';
 import FavoriteIcon from '@material-ui/icons/Favorite';
 
 import Repos from './Repos';
+import { handleStore, checkStore } from './LocalStorage';
 
 const useStyles = makeStyles({
   card: {
@@ -39,9 +40,15 @@ export default function SingleCard(props) {
   const classes = useStyles();
 
   const [expanded, setExpanded] = useState(false);
+  const [update, setUpdate] = useState(false);
 
   async function handleExpandClick() {
     setExpanded(!expanded);
+  }
+
+  function handleStoreClick(user) {
+    setUpdate(!update);
+    handleStore(user);
   }
 
   return (
@@ -49,7 +56,10 @@ export default function SingleCard(props) {
       <CardHeader
         avatar={(
           <Avatar aria-label="recipe">
-            L
+            {props.item.name
+              && (
+                props.item.name.charAt(0)
+              )}
           </Avatar>
         )}
         title={props.item.name}
@@ -61,7 +71,7 @@ export default function SingleCard(props) {
                 <LinkIcon />
               </IconButton>
             </Link>
-            <IconButton aria-label="Favorite">
+            <IconButton aria-label="Favorite" onClick={() => handleStoreClick(props.item.login)} color={checkStore(props.item.login) ? 'secondary' : 'default'}>
               <FavoriteIcon />
             </IconButton>
           </>
