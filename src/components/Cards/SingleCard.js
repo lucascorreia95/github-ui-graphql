@@ -9,9 +9,12 @@ import CardHeader from '@material-ui/core/CardHeader';
 import Avatar from '@material-ui/core/Avatar';
 import Collapse from '@material-ui/core/Collapse';
 import CardContent from '@material-ui/core/CardContent';
+import CardMedia from '@material-ui/core/CardMedia';
 import LinkIcon from '@material-ui/icons/Link';
 import Link from '@material-ui/core/Link';
 import IconButton from '@material-ui/core/IconButton';
+import Typography from '@material-ui/core/Typography';
+import FavoriteIcon from '@material-ui/icons/Favorite';
 
 import Repos from './Repos';
 
@@ -25,6 +28,10 @@ const useStyles = makeStyles({
     alignItems: 'center',
     justifyContent: 'center',
     margin: '15px 0',
+  },
+  media: {
+    height: 0,
+    paddingTop: '36.25%',
   },
 });
 
@@ -40,17 +47,36 @@ export default function SingleCard(props) {
   return (
     <Card key={props.item.id} className={classes.card}>
       <CardHeader
-        avatar={<Avatar aria-label="recipe" alt={props.item.login} src={props.item.avatarUrl} />}
+        avatar={(
+          <Avatar aria-label="recipe">
+            L
+          </Avatar>
+        )}
         title={props.item.name}
         subheader={props.item.login}
         action={(
-          <Link href={props.item.url}>
-            <IconButton aria-label="settings">
-              <LinkIcon />
+          <>
+            <Link href={props.item.url}>
+              <IconButton aria-label="Link">
+                <LinkIcon />
+              </IconButton>
+            </Link>
+            <IconButton aria-label="Favorite">
+              <FavoriteIcon />
             </IconButton>
-          </Link>
+          </>
         )}
       />
+      <CardMedia
+        className={classes.media}
+        image={props.item.avatarUrl}
+        title={props.item.name}
+      />
+      <CardContent>
+        <Typography variant="body2" color="textSecondary" component="p">
+          {props.item.bio}
+        </Typography>
+      </CardContent>
       <CardActions>
         <Button variant="contained" color="primary" size="small" onClick={handleExpandClick}>Repositórios</Button>
       </CardActions>

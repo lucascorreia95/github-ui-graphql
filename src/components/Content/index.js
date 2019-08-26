@@ -6,7 +6,7 @@ import Button from '@material-ui/core/Button';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import Box from '@material-ui/core/Box';
 
-import { Query } from 'react-apollo';
+import { ApolloConsumer } from 'react-apollo';
 import gql from 'graphql-tag';
 
 import Cards from '../Cards';
@@ -26,13 +26,9 @@ const useStyles = makeStyles((theme) => ({
 
 function Content() {
   const [user, setUser] = useState('');
-  const [info, setInfor] = useState(false);
+  const [cards, setCards] = useState();
+  const [loading, setLoading] = useState(false);
   const classes = useStyles();
-
-  async function handleSubmit(event) {
-    event.preventDefault();
-    setInfor(true);
-  }
 
   const SearchQuery = gql`
     query search($queryUser: String!){
@@ -47,6 +43,7 @@ function Content() {
               id
               avatarUrl
               url
+              bio
             }
           }
         }
@@ -54,58 +51,57 @@ function Content() {
     }
   `;
 
+  async function handleSubmit(event, client) {
+    event.preventDefault();
+    setCards(null);
+    setLoading(true);
+    const data = await client.query({ query: SearchQuery, variables: { queryUser: user } });
+    setCards(data);
+    setLoading(false);
+  }
+
   return (
-
     <Container maxWidth="sm" className={classes.container}>
-      <form onSubmit={handleSubmit}>
-        <TextField
-          variant="outlined"
-          margin="normal"
-          required
-          fullWidth
-          id="user"
-          label="Usuário"
-          name="user"
-          autoComplete="user"
-          autoFocus
-          onChange={(event) => setUser(event.target.value)}
-          value={user}
-        />
-        <Button
-          type="submit"
-          fullWidth
-          variant="contained"
-          color="primary"
-          className={classes.submit}
-        >
-          Buscar
-        </Button>
-      </form>
-
-      {info
-        && (
-          <Query query={SearchQuery} variables={{ queryUser: user }}>
-
-            {({ loading, error, data }) => {
-              if (loading) {
-                return (
-                  <Box component="div" className={classes.box}>
-                    <CircularProgress />
-                  </Box>
-                );
-              }
-
-              if (error) {
-                console.log(error);
-                return (<span>Desculpe, algo deu errado ):</span>);
-              }
-
-              return (
-                <Cards data={data} />
-              );
-            }}
-          </Query>
+      <ApolloConsumer>
+        {(client) => (
+          <>
+            <form onSubmit={(event) => handleSubmit(event, client)}>
+              <TextField
+                variant="outlined"
+                margin="normal"
+                required
+                fullWidth
+                id="user"
+                label="Usuário"
+                name="user"
+                autoComplete="user"
+                autoFocus
+                onChange={(event) => setUser(event.target.value)}
+                value={user}
+              />
+              <Button
+                type="submit"
+                fullWidth
+                variant="contained"
+                color="primary"
+                className={classes.submit}
+              >
+                Buscar
+              </Button>
+            </form>
+            {loading
+              && (
+              <Box component="div" className={classes.box}>
+                <CircularProgress />
+              </Box>
+              )}
+            {cards
+              && (
+                <Cards data={cards} />
+              )}
+          </>
         )}
+      </ApolloConsumer>
     </Container>
   );
 }
