@@ -1,4 +1,3 @@
-/* eslint-disable max-len */
 /* eslint-disable no-unused-vars */
 import React from 'react';
 import clsx from 'clsx';
@@ -139,10 +138,12 @@ export default function ButtonAppBar() {
         <DialogTitle id="max-width-dialog-title">Informações</DialogTitle>
         <DialogContent>
           <DialogContentText>
-            Use a aplicação para buscar usuários no GitHub e visualizar seus respectivos repositórios.
+            Use a aplicação para buscar usuários no
+            GitHub e visualizar seus respectivos repositórios.
           </DialogContentText>
           <DialogContentText>
-            Aplicação desenvolvida com o objetivo de treinar e familiarizar com o uso do framework Material-UI e com a Api React Hooks.
+            Aplicação desenvolvida com o objetivo de treinar e
+            familiarizar com o uso do framework Material-UI e com a Api React Hooks.
           </DialogContentText>
         </DialogContent>
         <DialogActions>

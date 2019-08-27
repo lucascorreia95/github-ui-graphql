@@ -1,4 +1,3 @@
-/* eslint-disable react/destructuring-assignment */
 /* eslint-disable react/prop-types */
 import React from 'react';
 import List from '@material-ui/core/List';
@@ -15,27 +14,13 @@ import CircularProgress from '@material-ui/core/CircularProgress';
 import Box from '@material-ui/core/Box';
 
 import { useQuery } from 'react-apollo';
-import gql from 'graphql-tag';
 
+import { SearchRepoQuery } from '../../Services/graphql';
 
 export default function Repos(props) {
   const { login } = props;
 
-  const SearchQuery = gql`
-    query Search($login : String!) {
-      user(login: $login) {
-        repositories(first: 10){
-          nodes{
-            id
-            name
-            url
-          }
-        }
-      }
-    }
-  `;
-
-  const { loading, error, data } = useQuery(SearchQuery, {
+  const { loading, error, data } = useQuery(SearchRepoQuery, {
     variables: { login },
   });
 

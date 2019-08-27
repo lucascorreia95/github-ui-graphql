@@ -5,11 +5,11 @@ import Container from '@material-ui/core/Container';
 import Button from '@material-ui/core/Button';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import Box from '@material-ui/core/Box';
-
 import { ApolloConsumer } from 'react-apollo';
-import gql from 'graphql-tag';
 
-import Cards from '../Cards';
+import { SearchQuery } from '../../Services/graphql';
+
+import { Cards } from '../Cards';
 
 // eslint-disable-next-line no-unused-vars
 const useStyles = makeStyles((theme) => ({
@@ -29,27 +29,6 @@ function Content() {
   const [cards, setCards] = useState();
   const [loading, setLoading] = useState(false);
   const classes = useStyles();
-
-  const SearchQuery = gql`
-    query search($queryUser: String!){
-      search(query: $queryUser, type: USER, first: 5) {
-        userCount
-        edges{
-          node{
-            __typename
-            ... on User {
-              name
-              login
-              id
-              avatarUrl
-              url
-              bio
-            }
-          }
-        }
-      }
-    }
-  `;
 
   async function handleSubmit(event, client) {
     event.preventDefault();

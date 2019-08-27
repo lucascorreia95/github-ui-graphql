@@ -3,13 +3,14 @@ import { createHttpLink } from 'apollo-link-http';
 import { InMemoryCache } from 'apollo-cache-inmemory';
 import { setContext } from 'apollo-link-context';
 
+import { APOLLO_URI, GRAPHQL_TOKEN } from '../common/constants';
+
 const httpLink = createHttpLink({
-  uri: 'https://api.github.com/graphql',
+  uri: APOLLO_URI,
 });
 
-
 const authLink = setContext((_, { headers }) => {
-  const token = 'd2f092483f691099f3e6bbb8aaff35b4e4ccb271';
+  const token = GRAPHQL_TOKEN;
 
   return {
     headers: {
