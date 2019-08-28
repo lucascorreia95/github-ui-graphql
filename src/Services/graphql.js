@@ -44,6 +44,13 @@ export const FavoriteQuery = gql`
       avatarUrl
       url
       bio
+      repositories(first: 10){
+        nodes{
+          id
+          name
+          url
+        }
+      }
     }
   }
 `;

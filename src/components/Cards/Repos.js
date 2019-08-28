@@ -13,46 +13,47 @@ import Link from '@material-ui/core/Link';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import Box from '@material-ui/core/Box';
 
-import { useQuery } from 'react-apollo';
+import { Query } from 'react-apollo';
 
 import { SearchRepoQuery } from '../../Services/graphql';
 
 export default function Repos(props) {
   const { login } = props;
-
-  const { loading, error, data } = useQuery(SearchRepoQuery, {
-    variables: { login },
-  });
-
-  if (loading) {
-    return (
-      <Box component="div">
-        <CircularProgress />
-      </Box>
-    );
-  }
-
-  if (error) return `Error! ${error}`;
-
   return (
-    <List>
-      {data.user.repositories.nodes.map((repo) => (
-        <ListItem key={repo.id}>
-          <ListItemAvatar>
-            <Avatar>
-              <FolderIcon />
-            </Avatar>
-          </ListItemAvatar>
-          <ListItemText primary={repo.name} />
-          <ListItemSecondaryAction>
-            <Link href={repo.url}>
-              <IconButton edge="end" aria-label="link">
-                <LinkIcon />
-              </IconButton>
-            </Link>
-          </ListItemSecondaryAction>
-        </ListItem>
-      ))}
-    </List>
+    <Query query={SearchRepoQuery} variables={{ login }}>
+      {({ loading, error, data }) => {
+        if (loading) {
+          return (
+            <Box component="div">
+              <CircularProgress />
+            </Box>
+          );
+        }
+
+        if (error) return `Error! ${error.message}`;
+
+        return (
+          <List>
+            {data.user.repositories.nodes.map((repo) => (
+              <ListItem key={repo.id}>
+                <ListItemAvatar>
+                  <Avatar>
+                    <FolderIcon />
+                  </Avatar>
+                </ListItemAvatar>
+                <ListItemText primary={repo.name} />
+                <ListItemSecondaryAction>
+                  <Link href={repo.url}>
+                    <IconButton edge="end" aria-label="link">
+                      <LinkIcon />
+                    </IconButton>
+                  </Link>
+                </ListItemSecondaryAction>
+              </ListItem>
+            ))}
+          </List>
+        );
+      }}
+    </Query>
   );
 }
