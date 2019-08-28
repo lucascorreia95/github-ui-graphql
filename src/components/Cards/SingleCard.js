@@ -17,7 +17,7 @@ import Typography from '@material-ui/core/Typography';
 import FavoriteIcon from '@material-ui/icons/Favorite';
 
 import Repos from './Repos';
-import { handleStore, checkStore } from './LocalStorage';
+import { handleStore, checkStore } from '../../common/LocalStorage';
 
 const useStyles = makeStyles({
   card: {
@@ -36,7 +36,7 @@ const useStyles = makeStyles({
   },
 });
 
-export default function SingleCard(props) {
+export default function SingleCard({ item }) {
   const classes = useStyles();
 
   const [expanded, setExpanded] = useState(false);
@@ -52,26 +52,26 @@ export default function SingleCard(props) {
   }
 
   return (
-    <Card key={props.item.id} className={classes.card}>
+    <Card key={item.id} className={classes.card}>
       <CardHeader
         avatar={(
           <Avatar aria-label="recipe">
-            {props.item.name
+            {item.name
               && (
-                props.item.name.charAt(0)
+                item.name.charAt(0)
               )}
           </Avatar>
         )}
-        title={props.item.name}
-        subheader={props.item.login}
+        title={item.name}
+        subheader={item.login}
         action={(
           <>
-            <Link href={props.item.url}>
+            <Link href={item.url}>
               <IconButton aria-label="Link">
                 <LinkIcon />
               </IconButton>
             </Link>
-            <IconButton aria-label="Favorite" onClick={() => handleStoreClick(props.item.login)} color={checkStore(props.item.login) ? 'secondary' : 'default'}>
+            <IconButton aria-label="Favorite" onClick={() => handleStoreClick(item.login)} color={checkStore(item.login) ? 'secondary' : 'default'}>
               <FavoriteIcon />
             </IconButton>
           </>
@@ -79,12 +79,12 @@ export default function SingleCard(props) {
       />
       <CardMedia
         className={classes.media}
-        image={props.item.avatarUrl}
-        title={props.item.name}
+        image={item.avatarUrl}
+        title={item.name}
       />
       <CardContent>
         <Typography variant="body2" color="textSecondary" component="p">
-          {props.item.bio}
+          {item.bio}
         </Typography>
       </CardContent>
       <CardActions>
@@ -92,7 +92,7 @@ export default function SingleCard(props) {
       </CardActions>
       <Collapse in={expanded} timeout="auto" unmountOnExit>
         <CardContent>
-          <Repos login={props.item.login} />
+          <Repos login={item.login} />
         </CardContent>
       </Collapse>
     </Card>

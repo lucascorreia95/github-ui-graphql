@@ -34,3 +34,16 @@ export const SearchRepoQuery = gql`
     }
   }
 `;
+
+export const FavoriteQuery = gql`
+  query Search($login : String!) {
+    user(login: $login) {
+      name
+      login
+      id
+      avatarUrl
+      url
+      bio
+    }
+  }
+`;

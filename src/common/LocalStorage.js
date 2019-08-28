@@ -1,4 +1,4 @@
-const arrUser = JSON.parse(window.localStorage.getItem('github-graphql/favorite')) || [];
+export const arrUser = JSON.parse(window.localStorage.getItem('github-graphql/favorite')) || [];
 
 export const handleStore = (user) => {
   if (arrUser.indexOf(user) === -1) {
