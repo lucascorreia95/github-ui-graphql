@@ -21,8 +21,10 @@ import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
-import InboxIcon from '@material-ui/icons/MoveToInbox';
-import MailIcon from '@material-ui/icons/Mail';
+import SearchIcon from '@material-ui/icons/Search';
+import FavoriteIcon from '@material-ui/icons/Favorite';
+import { Link as RouterLink } from 'react-router-dom';
+import Link from '@material-ui/core/Link';
 
 const drawerWidth = 240;
 
@@ -33,8 +35,25 @@ const useStyles = makeStyles((theme) => ({
   title: {
     flexGrow: 1,
   },
+  link: {
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'flex-start',
+    width: '100%',
+    color: '#757575',
+    '&:hover': {
+      textDecoration: 'none',
+    },
+  },
   hide: {
     display: 'none',
+  },
+  toolbarIcon: {
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'flex-end',
+    padding: '0 8px',
+    ...theme.mixins.toolbar,
   },
   appBar: {
     zIndex: theme.zIndex.drawer + 1,
@@ -104,9 +123,9 @@ export default function ButtonAppBar() {
   return (
     <div className={classes.root}>
       <AppBar
-        position="static"
+        position="fixed"
         className={clsx(classes.appBar, {
-          [classes.appBarShift]: open,
+          [classes.appBarShift]: openDrawer,
         })}
       >
         <Toolbar>
@@ -167,19 +186,29 @@ export default function ButtonAppBar() {
         }}
         open={openDrawer}
       >
-        <div className={classes.toolbar}>
+        <div className={classes.toolbarIcon}>
           <IconButton onClick={handleDrawerClose}>
             <ChevronLeftIcon />
           </IconButton>
         </div>
         <Divider />
         <List>
-          {['Inbox', 'Starred', 'Send email', 'Drafts'].map((text, index) => (
-            <ListItem button key={text}>
-              <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
-              <ListItemText primary={text} />
-            </ListItem>
-          ))}
+          <ListItem button>
+            <Link className={classes.link} component={RouterLink} to="/">
+              <ListItemIcon>
+                <SearchIcon />
+              </ListItemIcon>
+              <ListItemText primary="Buscar" />
+            </Link>
+          </ListItem>
+          <ListItem button>
+            <Link className={classes.link} component={RouterLink} to="/favorite">
+              <ListItemIcon>
+                <FavoriteIcon />
+              </ListItemIcon>
+              <ListItemText primary="Favoritos" />
+            </Link>
+          </ListItem>
         </List>
       </Drawer>
     </div>

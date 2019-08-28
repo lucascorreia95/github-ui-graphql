@@ -11,10 +11,11 @@ import { SearchQuery } from '../../Services/graphql';
 
 import { Cards } from '../Cards';
 
-// eslint-disable-next-line no-unused-vars
 const useStyles = makeStyles((theme) => ({
   container: {
     margin: '15px auto',
+    paddingTop: theme.spacing(8),
+    paddingBottom: theme.spacing(8),
   },
   box: {
     display: 'flex',
