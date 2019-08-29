@@ -10,9 +10,4 @@ export const handleStore = (user) => {
   window.localStorage.setItem('github-graphql/favorite', JSON.stringify(arrUser));
 };
 
-export const checkStore = (user) => {
-  if (arrUser.indexOf(user) !== -1) {
-    return true;
-  }
-  return false;
-};
+export const checkStore = (user) => (arrUser.indexOf(user) !== -1);

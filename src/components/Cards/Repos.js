@@ -1,4 +1,3 @@
-/* eslint-disable react/prop-types */
 import React from 'react';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
@@ -12,13 +11,13 @@ import LinkIcon from '@material-ui/icons/Link';
 import Link from '@material-ui/core/Link';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import Box from '@material-ui/core/Box';
+import PropTypes from 'prop-types';
 
 import { Query } from 'react-apollo';
 
 import { SearchRepoQuery } from '../../Services/graphql';
 
-export default function Repos(props) {
-  const { login } = props;
+export default function Repos({ login }) {
   return (
     <Query query={SearchRepoQuery} variables={{ login }}>
       {({ loading, error, data }) => {
@@ -57,3 +56,7 @@ export default function Repos(props) {
     </Query>
   );
 }
+
+Repos.propTypes = {
+  login: PropTypes.string.isRequired,
+};
