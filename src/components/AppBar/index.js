@@ -109,12 +109,12 @@ export default function ButtonAppBar() {
         <DialogTitle id="max-width-dialog-title">Informações</DialogTitle>
         <DialogContent>
           <DialogContentText>
-            Use a aplicação para buscar usuários no
+            Use a aplicação para buscar e favoritar usuários no
             GitHub e visualizar seus respectivos repositórios.
           </DialogContentText>
           <DialogContentText>
             Aplicação desenvolvida com o objetivo de treinar e
-            familiarizar com o uso do framework Material-UI e com a Api React Hooks.
+            familiarizar com o uso do framework Material-UI, GraphQL e com a Api React Hooks.
           </DialogContentText>
         </DialogContent>
         <DialogActions>
