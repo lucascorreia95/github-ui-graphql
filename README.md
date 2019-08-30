@@ -1,5 +1,9 @@
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
+To make requests requires a github access token: https://developer.github.com/v4/guides/forming-calls/#authenticating-with-graphql
+
+You also need to create a project root .env file following the example of the .env-example file.
+
 ## Available Scripts
 
 In the project directory, you can run:
