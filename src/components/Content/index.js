@@ -35,7 +35,7 @@ function Content() {
     event.preventDefault();
     setCards(null);
     setLoading(true);
-    const data = await client.query({ query: SearchQuery, variables: { queryUser: user } });
+    const { data } = await client.query({ query: SearchQuery, variables: { queryUser: user } });
     setCards(data);
     setLoading(false);
   }
@@ -48,6 +48,7 @@ function Content() {
             <form onSubmit={(event) => handleSubmit(event, client)}>
               <TextField
                 variant="outlined"
+                inputProps={{ 'data-testid': 'form-field' }}
                 margin="normal"
                 required
                 fullWidth
@@ -61,6 +62,7 @@ function Content() {
               />
               <Button
                 type="submit"
+                data-testid="form-button"
                 fullWidth
                 variant="contained"
                 color="primary"
