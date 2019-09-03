@@ -99,5 +99,8 @@ export default function SingleCard({ item }) {
 }
 
 SingleCard.propTypes = {
-  item: PropTypes.string.isRequired,
+  item: PropTypes.oneOfType([
+    PropTypes.object,
+    PropTypes.array,
+  ]).isRequired,
 };
