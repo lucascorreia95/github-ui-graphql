@@ -5,7 +5,7 @@ import Container from '@material-ui/core/Container';
 import Button from '@material-ui/core/Button';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import Box from '@material-ui/core/Box';
-import { ApolloConsumer } from 'react-apollo';
+import { withApollo } from 'react-apollo';
 
 import { SearchQuery } from '../../Services/graphql';
 
@@ -25,7 +25,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function Content() {
+function Content({ client }) {
   const [user, setUser] = useState('');
   const [cards, setCards] = useState();
   const [loading, setLoading] = useState(false);
@@ -41,51 +41,45 @@ function Content() {
   }
 
   return (
-    <Container maxWidth="sm" className={classes.container}>
-      <ApolloConsumer>
-        {(client) => (
-          <>
-            <form onSubmit={(event) => handleSubmit(event, client)}>
-              <TextField
-                variant="outlined"
-                inputProps={{ 'data-testid': 'form-field' }}
-                margin="normal"
-                required
-                fullWidth
-                id="user"
-                label="Usuário"
-                name="user"
-                autoComplete="user"
-                autoFocus
-                onChange={(event) => setUser(event.target.value)}
-                value={user}
-              />
-              <Button
-                type="submit"
-                data-testid="form-button"
-                fullWidth
-                variant="contained"
-                color="primary"
-                className={classes.submit}
-              >
-                Buscar
-              </Button>
-            </form>
-            {loading
-              && (
-              <Box component="div" className={classes.box}>
-                <CircularProgress />
-              </Box>
-              )}
-            {cards
-              && (
-                <Cards data={cards} />
-              )}
-          </>
+    <Container maxWidth="sm" className={classes.container} data-testid="container">
+      <form onSubmit={(event) => handleSubmit(event, client)}>
+        <TextField
+          variant="outlined"
+          inputProps={{ 'data-testid': 'form-field' }}
+          margin="normal"
+          required
+          fullWidth
+          id="user"
+          label="Usuário"
+          name="user"
+          autoComplete="user"
+          autoFocus
+          onChange={(event) => setUser(event.target.value)}
+          value={user}
+        />
+        <Button
+          type="submit"
+          data-testid="form-button"
+          fullWidth
+          variant="contained"
+          color="primary"
+          className={classes.submit}
+        >
+          Buscar
+        </Button>
+      </form>
+      {loading
+        && (
+        <Box component="div" className={classes.box}>
+          <CircularProgress />
+        </Box>
         )}
-      </ApolloConsumer>
+      {cards
+        && (
+          <Cards data={cards} />
+        )}
     </Container>
   );
 }
 
-export default Content;
+export default withApollo(Content);

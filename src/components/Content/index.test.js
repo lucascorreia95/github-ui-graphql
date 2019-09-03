@@ -80,5 +80,11 @@ describe('Tests for search form of component', () => {
       () => getByTestId('form-button'),
     );
     fireEvent.click(btnNode);
+
+    const container = await waitForElement(
+      () => getByTestId('container'),
+    );
+
+    console.log(container.innerHTML);
   });
 });
