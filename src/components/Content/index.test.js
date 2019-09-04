@@ -4,9 +4,10 @@ import { MockedProvider } from '@apollo/react-testing';
 import { fireEvent, render, waitForElement } from '@testing-library/react';
 
 import Content from './index';
-import { SearchQuery } from '../../Services/graphql';
+import { SearchQuery, SearchRepoQuery } from '../../Services/graphql';
 
 const searchUser = 'lucascorreia';
+const searchRepo = 'lucascorreia95';
 
 const mocks = [
   {
@@ -59,32 +60,93 @@ const mocks = [
       },
     },
   },
+  {
+    request: {
+      query: SearchRepoQuery,
+      variables: {
+        login: searchRepo,
+      },
+    },
+    result: {
+      data: {
+        user: {
+          repositories: {
+            nodes: [
+              {
+                id: 'MDEwOlJlcG9zaXRvcnkxNDg4NjgyMDg=',
+                name: 'curso-react',
+                url: 'https://github.com/lucascorreia95/curso-react',
+              },
+              {
+                id: 'MDEwOlJlcG9zaXRvcnkxNTQ0MDMwNzk=',
+                name: 'projeto1',
+                url: 'https://github.com/lucascorreia95/projeto1'
+              },
+              {
+                id: 'MDEwOlJlcG9zaXRvcnkxNTc2MDc4MzI=',
+                name: 'projeto2',
+                url: 'https://github.com/lucascorreia95/projeto2'
+              },
+            ],
+          },
+        },
+      },
+    },
+  },
 ];
 
+function createCompomnent(props = {}) {
+  const defaultProps = {
+    ...props,
+  };
+
+  return render(
+    <MockedProvider mocks={mocks} addTypename={false}>
+      <Content {...defaultProps} />
+    </MockedProvider>,
+  );
+}
+
 describe('Tests for search form of component', () => {
+  it('Should render component', () => {
+    const { container } = createCompomnent();
+    expect(container.firstChild).toBeDefined();
+  });
+
   it('Should search users when form has been submitted', async () => {
-    const { getByTestId } = render(
-      <MockedProvider mocks={mocks}>
-        <Content />
-      </MockedProvider>,
-    );
-    const fieldNode = await waitForElement(
-      () => getByTestId('form-field'),
-    );
+    const { getByTestId, getAllByTestId } = createCompomnent();
+    const fieldNode = getByTestId('form-field');
     fireEvent.change(
       fieldNode,
       { target: { value: searchUser } },
     );
     expect(fieldNode.value).toEqual(searchUser);
-    const btnNode = await waitForElement(
-      () => getByTestId('form-button'),
-    );
+    const btnNode = getByTestId('form-button');
     fireEvent.click(btnNode);
-
-    const container = await waitForElement(
-      () => getByTestId('container'),
+    const cards = await waitForElement(
+      () => getAllByTestId('cards'),
     );
+    expect(cards).toBeDefined();
+  });
 
-    console.log(container.innerHTML);
+  it('Should get the repositories from the user of the card', async () => {
+    const { getByTestId, getAllByTestId, getByLabelText } = createCompomnent();
+    const fieldNode = getByTestId('form-field');
+    fireEvent.change(
+      fieldNode,
+      { target: { value: searchUser } },
+    );
+    expect(fieldNode.value).toEqual(searchUser);
+    const btnNode = getByTestId('form-button');
+    fireEvent.click(btnNode);
+    const cards = await waitForElement(
+      () => getAllByTestId('cards'),
+    );
+    expect(cards).toBeDefined();
+    const repoButton = await waitForElement(
+      () => getByLabelText(`Buscar Repositórios de ${searchRepo}`),
+    );
+    expect(repoButton).toBeDefined();
+    fireEvent.click(repoButton);
   });
 });

@@ -51,7 +51,7 @@ export default function SingleCard({ item }) {
   }
 
   return (
-    <Card key={item.id} className={classes.card}>
+    <Card key={item.id} className={classes.card} data-testid="cards">
       <CardHeader
         avatar={(
           <Avatar aria-label="recipe">
@@ -87,7 +87,15 @@ export default function SingleCard({ item }) {
         </Typography>
       </CardContent>
       <CardActions>
-        <Button variant="contained" color="primary" size="small" onClick={handleExpandClick}>Repositórios</Button>
+        <Button
+          variant="contained"
+          color="primary"
+          size="small"
+          onClick={handleExpandClick}
+          aria-label={`Buscar Repositórios de ${item.login}`}
+        >
+          Repositórios
+        </Button>
       </CardActions>
       <Collapse in={expanded} timeout="auto" unmountOnExit>
         <CardContent>
