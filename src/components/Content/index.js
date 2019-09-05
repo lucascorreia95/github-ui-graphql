@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
+import Typography from '@material-ui/core/Typography';
 import Container from '@material-ui/core/Container';
 import Button from '@material-ui/core/Button';
 import CircularProgress from '@material-ui/core/CircularProgress';
@@ -23,26 +24,38 @@ const useStyles = makeStyles((theme) => ({
     justifyContent: 'center',
     margin: '15px 0',
   },
+  erro: {
+    textAlign: 'center',
+    padding: '15px',
+    display: 'block',
+  },
 }));
 
 function Content({ client }) {
   const [user, setUser] = useState('');
   const [cards, setCards] = useState();
+  const [erro, setErro] = useState(false);
   const [loading, setLoading] = useState(false);
   const classes = useStyles();
 
-  async function handleSubmit(event, client) {
+  async function handleSubmit(event) {
     event.preventDefault();
     setCards(null);
+    setErro(false);
     setLoading(true);
-    const { data } = await client.query({ query: SearchQuery, variables: { queryUser: user } });
-    setCards(data);
+    await client.query({ query: SearchQuery, variables: { queryUser: user } })
+      .then(({ data }) => {
+        setCards(data);
+      })
+      .catch(() => {
+        setErro(true);
+      });
     setLoading(false);
   }
 
   return (
     <Container maxWidth="sm" className={classes.container} data-testid="container">
-      <form onSubmit={(event) => handleSubmit(event, client)}>
+      <form onSubmit={handleSubmit}>
         <TextField
           variant="outlined"
           inputProps={{ 'data-testid': 'form-field' }}
@@ -77,6 +90,15 @@ function Content({ client }) {
       {cards
         && (
           <Cards data={cards} />
+        )}
+      {erro
+        && (
+          <Typography
+            className={classes.erro}
+            aria-label="Mensagem de erro"
+          >
+            Desculpe, mas algo deu errado ):
+          </Typography>
         )}
     </Container>
   );
