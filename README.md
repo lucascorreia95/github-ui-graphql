@@ -1,3 +1,6 @@
+https://travis-ci.com/lucascorreia95/github-ui-graphql.svg?branch=master
+
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 To make requests requires a github access token: https://developer.github.com/v4/guides/forming-calls/#authenticating-with-graphql
