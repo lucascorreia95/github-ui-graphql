@@ -1,4 +1,5 @@
 ![pipeline status](https://travis-ci.com/lucascorreia95/github-ui-graphql.svg?branch=master)
+[![Coverage Status](https://coveralls.io/repos/github/lucascorreia95/github-ui-graphql/badge.svg?branch=master)](https://coveralls.io/github/lucascorreia95/github-ui-graphql?branch=master)
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
