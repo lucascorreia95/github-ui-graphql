@@ -51,10 +51,10 @@ export default function SingleCard({ item }) {
   }
 
   return (
-    <Card key={item.id} className={classes.card}>
+    <Card key={item.id} className={classes.card} data-testid="cards">
       <CardHeader
         avatar={(
-          <Avatar aria-label="recipe">
+          <Avatar aria-label={`Avatar de ${item.name}`}>
             {item.name
               && (
                 item.name.charAt(0)
@@ -65,12 +65,12 @@ export default function SingleCard({ item }) {
         subheader={item.login}
         action={(
           <>
-            <Link href={item.url}>
+            <Link href={item.url} aria-label={`Link para o GitHub de ${item.name}`}>
               <IconButton aria-label="Link">
                 <LinkIcon />
               </IconButton>
             </Link>
-            <IconButton aria-label="Favorite" onClick={() => handleStoreClick(item.login)} color={checkStore(item.login) ? 'secondary' : 'default'}>
+            <IconButton aria-label={`Icone para favoritar ${item.name}`} onClick={() => handleStoreClick(item.login)} color={checkStore(item.login) ? 'secondary' : 'default'}>
               <FavoriteIcon />
             </IconButton>
           </>
@@ -80,14 +80,23 @@ export default function SingleCard({ item }) {
         className={classes.media}
         image={item.avatarUrl}
         title={item.name}
+        aria-label={`Imagem do usuário ${item.login}`}
       />
-      <CardContent>
+      <CardContent aria-label={`Biografia do usuário ${item.login}`}>
         <Typography variant="body2" color="textSecondary" component="p">
           {item.bio}
         </Typography>
       </CardContent>
       <CardActions>
-        <Button variant="contained" color="primary" size="small" onClick={handleExpandClick}>Repositórios</Button>
+        <Button
+          variant="contained"
+          color="primary"
+          size="small"
+          onClick={handleExpandClick}
+          aria-label={`Buscar Repositórios de ${item.login}`}
+        >
+          Repositórios
+        </Button>
       </CardActions>
       <Collapse in={expanded} timeout="auto" unmountOnExit>
         <CardContent>
@@ -99,5 +108,8 @@ export default function SingleCard({ item }) {
 }
 
 SingleCard.propTypes = {
-  item: PropTypes.string.isRequired,
+  item: PropTypes.oneOfType([
+    PropTypes.object,
+    PropTypes.array,
+  ]).isRequired,
 };

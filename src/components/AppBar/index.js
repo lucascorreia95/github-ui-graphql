@@ -86,16 +86,25 @@ export default function ButtonAppBar() {
         <Toolbar>
           <IconButton
             color="inherit"
-            aria-label="open drawer"
+            aria-label="Abrir menu lateral"
             onClick={handleDrawerOpen}
             edge="start"
           >
             <MenuIcon />
           </IconButton>
-          <Typography variant="h6" component="h1" className={classes.title}>
+          <Typography
+            variant="h6"
+            component="h1"
+            className={classes.title}
+            aria-label="Título do Aplicativo"
+          >
             GitHub - Material-UI
           </Typography>
-          <IconButton color="inherit" onClick={handleClickOpen}>
+          <IconButton
+            color="inherit"
+            onClick={handleClickOpen}
+            aria-label="Abrir informações sobre o Aplicativo"
+          >
             <HelpOutlineIcon />
           </IconButton>
         </Toolbar>
@@ -105,9 +114,10 @@ export default function ButtonAppBar() {
         open={open}
         onClose={handleClose}
         aria-labelledby="max-width-dialog-title"
+        aria-label="Caixa de diálogo das informações sobre o Aplicativo"
       >
         <DialogTitle id="max-width-dialog-title">Informações</DialogTitle>
-        <DialogContent>
+        <DialogContent aria-label="Informações sobre o Aplicativo">
           <DialogContentText>
             Use a aplicação para buscar e favoritar usuários no
             GitHub e visualizar seus respectivos repositórios.
@@ -118,7 +128,11 @@ export default function ButtonAppBar() {
           </DialogContentText>
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleClose} color="primary">
+          <Button
+            onClick={handleClose}
+            color="primary"
+            aria-label="Botão para fechar a caixa de diálogo"
+          >
             Fechar
           </Button>
         </DialogActions>
@@ -126,16 +140,26 @@ export default function ButtonAppBar() {
 
       <Drawer
         open={openDrawer}
+        aria-label="Menu lateral"
       >
         <div className={classes.toolbarIcon}>
-          <IconButton onClick={handleDrawerClose}>
+          <IconButton
+            onClick={handleDrawerClose}
+            aria-label="Botão para fechar o menu lateral"
+          >
             <ChevronLeftIcon />
           </IconButton>
         </div>
         <Divider />
         <List className={classes.list}>
           <ListItem button>
-            <Link className={classes.link} component={RouterLink} to="/" onClick={handleDrawerClose}>
+            <Link
+              className={classes.link}
+              component={RouterLink}
+              to="/"
+              onClick={handleDrawerClose}
+              aria-label="Link para a página inicial"
+            >
               <ListItemIcon>
                 <SearchIcon />
               </ListItemIcon>
@@ -143,7 +167,13 @@ export default function ButtonAppBar() {
             </Link>
           </ListItem>
           <ListItem button>
-            <Link className={classes.link} component={RouterLink} to="/favorite" onClick={handleDrawerClose}>
+            <Link
+              className={classes.link}
+              component={RouterLink}
+              to="/favorite"
+              onClick={handleDrawerClose}
+              aria-label="Link para a lista de favoritos"
+            >
               <ListItemIcon>
                 <FavoriteIcon />
               </ListItemIcon>
