@@ -1,5 +1,4 @@
-https://travis-ci.com/lucascorreia95/github-ui-graphql.svg?branch=master
-
+![pipeline status](https://travis-ci.com/lucascorreia95/github-ui-graphql.svg?branch=master)
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
