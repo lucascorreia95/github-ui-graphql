@@ -4,7 +4,7 @@
 ## Description
 
 You can use this app to find users and your repositories in the community of GitHub, also you can mark the users found as a favorite.
-The users maked as favorit can be viewed in the Favorites page.
+The users maked as favorite can be viewed in the Favorites page.
 
 ## Motivation
 
