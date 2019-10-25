@@ -1,6 +1,18 @@
 ![pipeline status](https://travis-ci.com/lucascorreia95/github-ui-graphql.svg?branch=master)
 [![Coverage Status](https://coveralls.io/repos/github/lucascorreia95/github-ui-graphql/badge.svg?branch=master)](https://coveralls.io/github/lucascorreia95/github-ui-graphql?branch=master)
 
+## Description
+
+You can use this app to find users and your repositories in the community of GitHub, also you can mark the users found as a favorite.
+The users maked as favorit can be viewed in the Favorites page.
+
+## Motivation
+
+This project was build to lear more about de GraphQL, Material-UI framework and React Testing Library.
+
+
+## Required
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 To make requests requires a github access token: https://developer.github.com/v4/guides/forming-calls/#authenticating-with-graphql
