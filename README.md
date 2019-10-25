@@ -15,6 +15,8 @@ This project was build to lear more about de GraphQL, Material-UI framework and 
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
+In the root directory run 'yarn' to install de dependencies. If you don't have de Yarn, you can use de 'npm install' too.
+
 To make requests requires a github access token: https://developer.github.com/v4/guides/forming-calls/#authenticating-with-graphql
 
 You also need to create a project root .env file following the example of the .env-example file.
