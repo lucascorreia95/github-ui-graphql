@@ -25,7 +25,6 @@ const useStyles = makeStyles((theme) => ({
 
 function Content() {
   const classes = useStyles();
-
   return (
     <Container maxWidth="md" className={classes.container}>
       <Typography className={classes.typography} variant="h6" component="h1">
