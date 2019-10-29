@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/core/styles';
 import IconButton from '@material-ui/core/IconButton';
 import Drawer from '@material-ui/core/Drawer';
@@ -36,7 +37,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function ButtonAppBar({ openDrawer, handleDrawerClose }) {
+export default function SideBar({ openDrawer, handleDrawerClose }) {
   const classes = useStyles();
 
   return (
@@ -86,3 +87,8 @@ export default function ButtonAppBar({ openDrawer, handleDrawerClose }) {
     </Drawer>
   );
 }
+
+SideBar.propTypes = {
+  openDrawer: PropTypes.bool.isRequired,
+  handleDrawerClose: PropTypes.func.isRequired,
+};
