@@ -17,9 +17,9 @@ import PropTypes from 'prop-types';
 
 import { Query } from 'react-apollo';
 
-import { SearchRepoQuery } from '../../Services/graphql';
+import { SearchRepoQuery } from '../../../Services/graphql';
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(() => ({
   erro: {
     textAlign: 'center',
     padding: '15px',

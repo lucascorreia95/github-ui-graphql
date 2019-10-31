@@ -9,7 +9,7 @@ import Typography from '@material-ui/core/Typography';
 import { Query } from 'react-apollo';
 import { FavoriteQuery } from '../../Services/graphql';
 import { arrUser } from '../../common/LocalStorage';
-import SingleCard from '../Cards/SingleCard';
+import SingleCard from '../Cards/components/SingleCard';
 
 const useStyles = makeStyles((theme) => ({
   container: {
